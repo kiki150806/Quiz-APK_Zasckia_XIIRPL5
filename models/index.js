@@ -19,4 +19,7 @@ db.sequelize = sequelize;
 
 // define semua models yang ada di aplikasi
 db.quizzes = require('./quiz')(sequelize, Sequelize);
+db.user = require('./user')(sequelize, Sequelize);
 module.exports = db;
+
+

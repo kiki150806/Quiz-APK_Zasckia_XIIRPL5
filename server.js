@@ -1,22 +1,27 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 5000;
-const quizRoute = require('./router/quiz');
-const jobsheetRoute = require('./router/jobsheet');
+const quizRoute = require("./router/quiz");
+const jobSheetRoute = require("./router/jobsheet");
+const authRoute = require("./router/auth");
+const router = require("express").Router();
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); //fungsinya agar bisa baca inputan dri form || for parsing application/json
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-const db = require('./models')
-db.sequelize.sync()
+const db = require("./models");
+db.sequelize.sync();
 
-app.get('/', (req, res) => {
-    res.send('Quiz ExpressJS by Zasckia');
+app.get("/", (req, res) => {
+  res.send("Quiz Express JS API by Zasckia");
 });
 
-app.use('/api/quizzes', quizRoute)
-app.use("/api/jobsheet", jobsheetRoute)
+app.use(authRoute);
+app.use("/api/quizzes", quizRoute);
+app.use("/api/jobsheet", jobSheetRoute);
 
-app.listen(port, () => console.log(`App listening on port http://localhost:${port}!`));
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
